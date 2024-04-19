@@ -13,8 +13,20 @@ export const login = async (email: string, password: string) => {
     return response;
 };
 
+const resetPassword = async (password: string, tokenId: string) => {
+    const response = await api.put('/password/reset', {
+        password,
+        tokenId,
+    });
+
+    return response;
+
+}
+
 const AuthService = {
     login,
+    resetPassword
+
 };
 
 export default AuthService;

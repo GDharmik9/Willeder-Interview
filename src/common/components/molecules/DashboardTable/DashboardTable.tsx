@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createColumnHelper } from '@tanstack/react-table'
 import Table from 'common/components/atoms/Table'
-
+import { useNavigate } from 'react-router-dom'
+import TokenService from 'services/token.service'
 
 
 const defaultData: Person[] = [
@@ -50,6 +51,15 @@ const columns = [
 const DashboardTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = React.useState(() => [...defaultData])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const token = TokenService.getLocalAccessToken()
+    if (!token) {
+      navigate('/')
+    }
+  }, [navigate])
 
   return <>{data && <Table data={data} columns={columns} />}</>
 }

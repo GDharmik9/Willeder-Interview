@@ -6,5 +6,5 @@ interface UserLogin {
 interface LoginFormProps {
   data: UserLogin
   onChange: React.ChangeEventHandler<HTMLInputElement>
-  onSubmit: (event: React.ChangeEvent<HTMLFormElement>, data: UserLogin) => void
+  onSubmit: (data: UserLogin, event: React.FormEvent<HTMLFormElement>) => void
 }

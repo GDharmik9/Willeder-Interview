@@ -8,6 +8,7 @@ const LoginSection = ({
   data,
   onChange,
   onLogin,
+
 }: LoginSectionProps) => {
   return (
     <section className="login-section">

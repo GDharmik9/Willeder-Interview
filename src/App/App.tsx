@@ -1,6 +1,7 @@
 import React from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import DashboardTable from 'common/components/molecules/DashboardTable'
-
+import Login from 'pages/Login';
 
 
 const App = () => {
@@ -8,7 +9,11 @@ const App = () => {
 
   return (
     <div className="App">
-      <DashboardTable />
+      <Routes>
+        <Route path="/dashboard" element={<DashboardTable />} />
+
+        <Route path="/" element={<Login />} />
+      </Routes>
     </div>
   );
 

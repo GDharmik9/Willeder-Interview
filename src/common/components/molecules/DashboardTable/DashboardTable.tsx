@@ -4,6 +4,8 @@ import Table from 'common/components/atoms/Table'
 import { useNavigate } from 'react-router-dom'
 import TokenService from 'services/token.service'
 
+import './DashboardTable.scss'
+
 
 const defaultData: Person[] = [
   {

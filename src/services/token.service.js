@@ -21,10 +21,10 @@ const getLocalRefreshToken = () => {
     return user ? user.refreshToken : '';
 }
 
-// const updateLocalAccessToken = (newAccessToken) => {
-//     const user = getUser();
-//     setUser({ ...user, accessToken: newAccessToken, refreshToken: newRefreshToken });
-// }
+const updateLocalAccessToken = (token) => {
+    const user = getUser();
+    setUser({ ...user, accessToken: token?.accessToken, refreshToken: token?.refreshToken });
+}
 
 const TokenService = {
     setUser,
@@ -32,7 +32,7 @@ const TokenService = {
     removeUser,
     getLocalAccessToken,
     getLocalRefreshToken,
-    // updateLocalAccessToken
+    updateLocalAccessToken
 }
 
 export default TokenService;

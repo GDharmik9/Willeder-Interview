@@ -1,4 +1,5 @@
 import axios from "axios";
+import TokenService from "./token.service";
 
 
 const instance = axios.create({
@@ -20,5 +21,36 @@ instance.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+instance.interceptors.response.use(
+    (res) => {
+        return res;
+    },
+    async (err) => {
+        const originalConfig = err.config;
+
+        if (err.response && err.response.status === 401 && !originalConfig._retry) {
+            originalConfig._retry = true;
+
+            try {
+                const rs = await axios.put('https://asia-northeast1-willeder-official.cloudfunctions.net/api/auth/refresh', {
+                    refreshToken: TokenService.getLocalRefreshToken(),
+                });
+
+                const { accessToken } = rs.data;
+                TokenService.updateLocalAccessToken(accessToken);
+
+                originalConfig.headers['x-access-token'] = accessToken;
+
+                return instance(originalConfig);
+            } catch (_error) {
+                return Promise.reject(_error);
+            }
+        }
+
+        return Promise.reject(err);
+    }
+);
+
 
 export default instance;

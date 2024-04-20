@@ -1,8 +1,9 @@
 import React from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import DashboardTable from 'common/components/molecules/DashboardTable'
+import { Routes, Route } from 'react-router-dom'
 import Login from 'pages/Login';
 import ResetPassword from 'pages/ResetPassword'
+import Register from 'pages/Register';
+import DashboardTable from 'common/components/molecules/DashboardTable'
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
+        <Route path="/" element={<Register />} />
         <Route path="/dashboard" element={<DashboardTable />} />
 
         <Route path="user/password/reset/:token" element={<ResetPassword />} />

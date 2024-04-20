@@ -23,9 +23,22 @@ const resetPassword = async (password: string, tokenId: string) => {
 
 }
 
+const register = async (email: string, password: string, name: string, address: string, phone: number) => {
+    const response = await api.post("/register", {
+        email,
+        password,
+        name,
+        address,
+        phone,
+    });
+
+    return response;
+}
+
 const AuthService = {
     login,
-    resetPassword
+    resetPassword,
+    register,
 
 };
 

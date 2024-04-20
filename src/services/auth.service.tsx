@@ -35,10 +35,19 @@ const register = async (email: string, password: string, name: string, address: 
     return response;
 }
 
+const forgetPassword = async (email: string) => {
+    const response = await api.put("/password/forgot", {
+        email,
+    });
+
+    return response;
+}
+
 const AuthService = {
     login,
     resetPassword,
     register,
+    forgetPassword
 
 };
 

@@ -1,7 +1,6 @@
 import React from 'react'
-import Button from 'common/components/atoms/Button'
-import Input from 'common/components/atoms/Input'
-import { Title, Anchor, Text } from '@mantine/core'
+import { Title } from '@mantine/core'
+import ForgetPassword from 'common/components/molecules/ForgetPassword'
 
 import './ForgetPasswordSection.scss'
 
@@ -9,31 +8,18 @@ const ForgetPasswordSection = ({
   onChange,
   onSubmit,
   data,
-}: ForgetFormProps) => {
+}: ForgetSectionProps) => {
   return (
-    <form className="forget-password">
+    <section className="forgetPassword-section">
       <Title order={3} ta={'center'}>
-        Froget Password
+        Forget Password
       </Title>
-      <Input
-        placeholder={'email'}
+      <ForgetPassword
+        data={data}
         onChange={onChange}
-        label={'Forget Password'}
-        value={data}
-        type={'text'}
-        name="forgetPassword"
+        onSubmit={onSubmit}
       />
-      <div className="button-wrapper">
-        <Button onClick={onSubmit} fullWidth>
-          Submit
-        </Button>
-      </div>
-      <Anchor href={'/login'}>
-        <Text ta={'right'} color="blue.5" td={'underline'} fw={700} fz={'xxs'}>
-          Back to Login
-        </Text>
-      </Anchor>
-    </form>
+    </section>
   )
 }
 

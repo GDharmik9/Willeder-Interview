@@ -3,7 +3,7 @@ import TokenService from "./token.service";
 
 
 const instance = axios.create({
-    baseURL: "https://asia-northeast1-willeder-official.cloudfunctions.net/api/auth",
+    baseURL: "https://asia-northeast1-willeder-official.cloudfunctions.net/api",
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

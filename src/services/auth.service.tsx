@@ -1,4 +1,3 @@
-import axios from "axios";
 import api from "./api";
 import TokenService from "./token.service";
 
@@ -9,7 +8,7 @@ interface User {
 }
 
 export const login = async (email: string, password: string) => {
-    const response = await api.put("/login", {
+    const response = await api.put("/auth/login", {
         email,
         password,
     });
@@ -21,7 +20,7 @@ export const login = async (email: string, password: string) => {
 };
 
 const resetPassword = async (password: string, tokenId: string) => {
-    const response = await api.put('/password/reset', {
+    const response = await api.put('/auth/password/reset', {
         password,
         tokenId,
     });
@@ -31,7 +30,7 @@ const resetPassword = async (password: string, tokenId: string) => {
 }
 
 const register = async (email: string, password: string, name: string, address: string, phone: number) => {
-    const response = await api.post("/register", {
+    const response = await api.post("/auth/register", {
         email,
         password,
         name,
@@ -43,7 +42,7 @@ const register = async (email: string, password: string, name: string, address: 
 }
 
 const forgetPassword = async (email: string) => {
-    const response = await api.put("/password/forgot", {
+    const response = await api.put("/auth/password/forgot", {
         email,
     });
 
@@ -56,7 +55,7 @@ const logout = async (token: User) => {
             Authorization: 'Bearer ' + token?.accessToken,
         },
     }
-    const response = await api.put("/logout", {}, config)
+    const response = await api.put("/auth/logout", {}, config)
 
     if (response.status === 200) {
         TokenService.removeUser();
@@ -73,7 +72,7 @@ const getList = async (token: User) => {
             Authorization: 'Bearer ' + token?.accessToken,
         },
     }
-    const response = await axios.get("https://asia-northeast1-willeder-official.cloudfunctions.net/api/lists", config)
+    const response = await api.get("/lists", config)
 
     return response;
 }

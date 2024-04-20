@@ -1,5 +1,6 @@
 {
   "name": "tea-sales-managment-client-v2",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

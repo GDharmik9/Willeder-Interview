@@ -1,3 +1,28 @@
+
+
+## Home screen 
+
+1. Registration
+---
+![Registration page](/src/common/assets/images/1.png)
+---
+2. Login
+---
+![Login page](/src/common/assets/images/2.png)
+---
+3. Forget password
+---
+![Forget Password](/src/common/assets/images/3.png)
+---
+4. Reset Password
+---
+![Reset Password](/src/common/assets/images/4.png)
+---
+5. Dashbord
+![dashbord after login](/src/common/assets/images/5.png)
+---
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

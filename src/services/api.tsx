@@ -5,6 +5,8 @@ import TokenService from "./token.service";
 const instance = axios.create({
     baseURL: "https://asia-northeast1-willeder-official.cloudfunctions.net/api/auth",
     headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         "Content-Type": "application/json",
     },
 });
@@ -13,14 +15,17 @@ instance.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("token");
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            // config.headers.Authorization = `Bearer ${token}`;
+            config.headers["x-access-token"] = token;
         }
+
         return config;
     },
     (error) => {
         return Promise.reject(error);
     }
 );
+
 
 instance.interceptors.response.use(
     (res) => {
@@ -31,7 +36,7 @@ instance.interceptors.response.use(
 
         if (err.response && err.response.status === 401 && !originalConfig._retry) {
             originalConfig._retry = true;
-
+            console.log('refresh token');
             try {
                 const rs = await axios.put('https://asia-northeast1-willeder-official.cloudfunctions.net/api/auth/refresh', {
                     refreshToken: TokenService.getLocalRefreshToken(),

@@ -3,8 +3,12 @@ import { createColumnHelper } from '@tanstack/react-table'
 import Table from 'common/components/atoms/Table'
 import { useNavigate } from 'react-router-dom'
 import TokenService from 'services/token.service'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import './DashboardTable.scss'
+import { Button } from '@mantine/core'
+import AuthService from 'services/auth.service'
 
 
 const defaultData: Person[] = [
@@ -63,7 +67,46 @@ const DashboardTable = () => {
     }
   }, [navigate])
 
-  return <>{data && <Table data={data} columns={columns} />}</>
+  const handleClick = async () => {
+
+   await AuthService.logout(TokenService.getUser()).then((response) => {
+      if (response.status === 200) {
+        TokenService.removeUser()
+        navigate('/')
+      }
+    })
+      .catch((error) => {
+        console.log(error)
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        console.log(resMessage)
+
+        toast.error(resMessage)
+      }
+      )
+
+  }
+
+
+  return <>
+    <div className='header'>
+      <Button
+        className='logout-button'
+        onClick={handleClick}
+        bg='black'
+        color='white'
+        variant='filled'
+      >
+        Log out
+      </Button>
+    </div>
+    {data && <Table data={data} columns={columns} />}
+    <ToastContainer position="top-center" />
+  </>
 }
 
 export default DashboardTable

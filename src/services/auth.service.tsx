@@ -1,6 +1,12 @@
 import api from "./api";
 import TokenService from "./token.service";
 
+interface User {
+    accessToken: string;
+    refreshToken: string;
+
+}
+
 export const login = async (email: string, password: string) => {
     const response = await api.put("/login", {
         email,
@@ -43,11 +49,26 @@ const forgetPassword = async (email: string) => {
     return response;
 }
 
+const logout = async (token: User) => {
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + token?.accessToken,
+        },
+    }
+    const response = await api.put("/logout", {}, config)
+
+    if (response.status === 200) {
+        TokenService.removeUser();
+    }
+    return response;
+}
+
 const AuthService = {
     login,
     resetPassword,
     register,
-    forgetPassword
+    forgetPassword,
+    logout,
 
 };
 

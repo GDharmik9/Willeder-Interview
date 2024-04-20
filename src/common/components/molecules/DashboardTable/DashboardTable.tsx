@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createColumnHelper } from '@tanstack/react-table'
 import Table from 'common/components/atoms/Table'
 import { useNavigate } from 'react-router-dom'
@@ -57,19 +57,46 @@ const columns = [
 const DashboardTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = React.useState(() => [...defaultData])
+  const [tableData, setTableData] = useState<Person[]>([])
+  const [accessToken, setAccessToken] = useState('')
 
   const navigate = useNavigate()
 
   useEffect(() => {
+
+    AuthService.getList(TokenService.getUser()).then((response) => {
+      if (response.status === 200) {
+        console.log(response.data)
+        setTableData(response.data)
+      }
+    }
+    ).catch((error) => {
+      console.log(error)
+      const resMessage =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(resMessage)
+
+      toast.error(resMessage)
+    }
+    )
+
     const token = TokenService.getLocalAccessToken()
-    if (!token) {
+    if (token) {
+      setAccessToken(token)
+      navigate('/dashboard')
+    } else {
+
       navigate('/')
     }
-  }, [navigate])
+  }, [accessToken, setAccessToken, navigate])
 
   const handleClick = async () => {
 
-   await AuthService.logout(TokenService.getUser()).then((response) => {
+    await AuthService.logout(TokenService.getUser()).then((response) => {
       if (response.status === 200) {
         TokenService.removeUser()
         navigate('/')
@@ -79,8 +106,8 @@ const DashboardTable = () => {
         console.log(error)
         const resMessage =
           (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+            error?.response?.data &&
+            error?.response?.data?.message) ||
           error.message ||
           error.toString();
         console.log(resMessage)

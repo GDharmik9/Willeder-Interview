@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "./api";
 import TokenService from "./token.service";
 
@@ -60,8 +61,24 @@ const logout = async (token: User) => {
     if (response.status === 200) {
         TokenService.removeUser();
     }
+    if (response.status == 500) {
+        TokenService.removeUser()
+    }
     return response;
 }
+
+const getList = async (token: User) => {
+    const config = {
+        headers: {
+            Authorization: 'Bearer ' + token?.accessToken,
+        },
+    }
+    const response = await axios.get("https://asia-northeast1-willeder-official.cloudfunctions.net/api/lists", config)
+
+    return response;
+}
+
+
 
 const AuthService = {
     login,
@@ -69,6 +86,7 @@ const AuthService = {
     register,
     forgetPassword,
     logout,
+    getList,
 
 };
 

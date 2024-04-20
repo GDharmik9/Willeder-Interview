@@ -68,6 +68,7 @@ const DashboardTable = () => {
       if (response.status === 200) {
         console.log(response.data)
         setTableData(response.data)
+        console.log(tableData)
       }
     }
     ).catch((error) => {

@@ -1,6 +1,5 @@
 import { MantineThemeOverride, rem } from '@mantine/core'
 import MantineColors from './colors'
-import buttonVariants from './button'
 
 export const theme: MantineThemeOverride = {
   focusRing: 'never',

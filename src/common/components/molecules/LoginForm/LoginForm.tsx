@@ -65,8 +65,24 @@ const LoginForm = ({ onSubmit, onChange, data }: LoginFormProps) => {
         </div>
         <div className="button-wrapper">
           <Button fullWidth type="submit">
-            Submit
+            Login
           </Button>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'Center' }}>
+          <Text fw={700} fz={'xs'}>
+            create account
+          </Text>
+          &nbsp;
+          <Anchor href={'/'}>
+            <Text
+              color="blue.5"
+              td={'underline'}
+              fw={700}
+              fz={'xxs'}
+            >
+              Sign up
+            </Text>
+          </Anchor>
         </div>
       </form>
     </>
